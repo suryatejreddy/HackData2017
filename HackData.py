@@ -1,7 +1,7 @@
 import pandas as pd
 import ast
 import pickle
-from flask import Flask, render_template
+from flask import Flask, render_template , request , jsonify
 import json
 
 app = Flask(__name__)
@@ -31,10 +31,21 @@ L = t[0]
 maxim = t[1]
 
 
-
 @app.route('/')
 def hello_world():
     return render_template('index.html', list_data=json.dumps(L), maxim = maxim)
+
+
+@app.route('/getData')
+def return_data():
+    lat = request.args.get('lat')
+    lng = request.args.get('lng')
+    
+
+
+
+
+    return jsonify({'lat':lat, 'lng':lng })
 
 
 if __name__ == '__main__':
