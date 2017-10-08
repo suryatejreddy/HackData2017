@@ -27,13 +27,5 @@ class Building:
 lat =  42.40089685923913 
 lon =  -83.15689086914062
 
-d = dict()
-data = pd.read_csv("buildings.csv")
-L = []
-maxim = 0
-maxim_data = []
-for index, row in data.iterrows():
-	print (row)
-	break
-# f = open('data.dat', 'wb')
-# pickle.dump((L, maxim), f)
+
+func(lat, lon, data)

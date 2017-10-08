@@ -24,19 +24,22 @@
   </head>
   <body>
     <div id="map-canvas"></div>
-
       <!-- Modal Structure -->
       <div id="modal1" class="modal">
         <div class="modal-content">
-          <h2 id="address"></h2>
-          <h4 style="float: left">
-              <ul>
-                  <li>Longitude: <span id = "lng"></span></li>
-                  <li>Latitude:  <span id="lat"> </span></li>
-                  <li>Confidence: <span id="confidence"> </span></li>
-              </ul>
-          </h4>
+            <div class="main_content">
+                <h2 id="address">Building</h2>
+                  <h4 style="float: left">
+                      <ul>
+                          <li>Longitude: <span id = "lng"></span></li>
+                          <li>Latitude:  <span id="lat"> </span></li>
+                      </ul>
+                  </h4>
             <img src="" id="building_image" style="float: right; padding: 10px">
+            </div>
+{#            <div class="loader" style="visibility: hidden;">#}
+{#                <img src="https://m.popkey.co/125a8b/Al6yq.gif">#}
+{#            </div>#}
         </div>
 {#        <div class="modal-footer">#}
 {#          <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Close</a>#}
@@ -55,7 +58,7 @@
         }
 
 
-        var myLatlng = new google.maps.LatLng(42.3314, -83.0458);
+        var myLatlng = new google.maps.LatLng(42.403, -83.094);
         // map options,
         var myOptions = {
           zoom: 12,
@@ -99,21 +102,26 @@
         });
 
         function getData(lat,lng){
+            if($("#modal1").modal()!=undefined) {
+                        $("#modal1").modal('open');
+                    }
+            var url = 'https://maps.googleapis.com/maps/api/streetview?size=600x300&location=' + lat  + ',' + lng + '&heaing=140.78&pitch=-0.76&key=AIzaSyAIK4SHHM9mQZGgSNcZB0BNBKLnRG_Yp9k';
+            $("#building_image").attr("src", url);
             $.ajax({
       			type:"GET",
       			url:"/getData",
       			data:{"lat":lat,"lng":lng},
       			success: function(data){
       				final = data;
-      				$("#address")[0].innerText = "Place Address";
+      				console.log(data);
+      				$("#address")[0].innerText = data.address;
       				$("#lng")[0].innerText = Math.round(data.lng*1000)/1000;
       				$("#lat")[0].innerText = Math.round(data.lat*1000)/1000;
-      				var url = 'https://maps.googleapis.com/maps/api/streetview?size=600x300&location=' + lat  + ',' + lng + '&heaing=140.78&pitch=-0.76&key=AIzaSyAIK4SHHM9mQZGgSNcZB0BNBKLnRG_Yp9k';
-                    $("#building_image").attr("src", url);
 
-      				if($("#modal1").modal()!=undefined) {
-                        $("#modal1").modal('open');
-                    }
+{#      				$("#lng")[0].innerText = Math.round(data.lng*1000)/1000;#}
+{#      				$("#lat")[0].innerText = Math.round(data.lat*1000)/1000;#}
+                        console.log(data.lat);
+
 
       			}
    			});

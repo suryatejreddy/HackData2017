@@ -1,4 +1,3 @@
-
 import pandas as pd
 import ast
 import pickle
@@ -30,7 +29,7 @@ f = open('dataFinal.dat','rb')
 t = pickle.load(f)
 L = t[0]
 maxim = t[1]
-data = pd.read_csv("buildings.csv")
+
 
 @app.route('/')
 def hello_world():
@@ -39,28 +38,29 @@ def hello_world():
 
 @app.route('/getData')
 def return_data():
-    global data
     lat = request.args.get('lat')
     lng = request.args.get('lng')
-    ans = func(lat,lng,data)
 
 
 
 
-    return jsonify(ans)
+
+    return jsonify({'lat':lat, 'lng':lng })
 
 def func(lat, lng,data):
     minimum = 100000000
     minRow = []
     for index, row in data.iterrows():
-        data2 = row.tolist()
-        coordinates = ast.literal_eval(data2[0])
-        address = str(data2[2])
+        data = row.tolist()
+        coordinates = ast.literal_eval(data[0])
         LAT = coordinates[0]
         LNG = coordinates[1]
-        dist = ((float(LAT)-float(lat))**2+(float(LNG)-float(lng))**2)**0.5
-        if (dist  < 0.01):
-            return {'lat':lat,'lng':lng,'address':address}
+        dist = ((LAT-lat)**2+(LNG-lng)**2)
+        minimum = min(dist, minimum)
+        if dist==minimum:
+            minRow = row
+
+    return (minRow.tolist())
 
 
 
