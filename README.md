@@ -7,3 +7,8 @@ To start the project, install Pandas and Flask.
 
 Once, the installation is complete, run the HackData.py file. 
  
+ 
+ DataSets taken from:
+ 1.https://data.detroitmi.gov/
+ 2.http://data.gov/
+ 
