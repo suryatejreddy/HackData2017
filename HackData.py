@@ -31,6 +31,9 @@ t = pickle.load(f)
 L = t[0]
 maxim = t[1]
 data = pd.read_csv("buildings.csv")
+ing="hacktober"
+pull="fest"
+pulling=pull+ing
 
 @app.route('/')
 def hello_world():
